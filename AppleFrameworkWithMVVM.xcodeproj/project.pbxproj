@@ -48,7 +48,7 @@
 		6A3CF2AD28BA3909000B91C2 = {
 			isa = PBXGroup;
 			children = (
-				6A3CF2B828BA3909000B91C2 /* AppleFrameworkWithModal */,
+				6A3CF2B828BA3909000B91C2 /* AppleFrameworkWithMVVM */,
 				6A3CF2B728BA3909000B91C2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,7 +61,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6A3CF2B828BA3909000B91C2 /* AppleFrameworkWithModal */ = {
+		6A3CF2B828BA3909000B91C2 /* AppleFrameworkWithMVVM */ = {
 			isa = PBXGroup;
 			children = (
 				6A3CF2B928BA3909000B91C2 /* AppDelegate.swift */,
@@ -76,7 +76,6 @@
 				6A05DC8928C1D0AF00682430 /* Detail.storyboard */,
 				6A05DC8B28C1D0E200682430 /* FrameworkDetailViewController.swift */,
 			);
-			name = AppleFrameworkWithModal;
 			path = AppleFrameworkWithMVVM;
 			sourceTree = "<group>";
 		};

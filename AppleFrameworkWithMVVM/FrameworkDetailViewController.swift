@@ -1,8 +1,7 @@
 //
 //  FrameworkDetailViewController.swift
-//  AppleFrameworkWithModal
+//  AppleFrameworkWithMVVM
 //
-//  Created by Kay on 2022/09/02.
 //
 
 import UIKit

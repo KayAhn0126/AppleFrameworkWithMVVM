@@ -1,8 +1,7 @@
 //
 //  SceneDelegate.swift
-//  AppleFrameworkWithCompositionalLayout
+//  AppleFrameworkWithMVVM
 //
-//  Created by Kay on 2022/08/27.
 //
 
 import UIKit
