@@ -17,13 +17,12 @@ class FrameworkViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var selectedFramework = PassthroughSubject<AppleFramework, Never>()
-    var frameworkListPublisher = CurrentValueSubject<[AppleFramework], Never>(AppleFramework.list)
-    
     var subscriptions = Set<AnyCancellable>()
     
+    var viewModel: FrameworkViewModel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = FrameworkViewModel(frameworkListPublisher: AppleFramework.list)
         bind()
         collectionView.delegate = self
         collectionView.collectionViewLayout = layout()
@@ -32,7 +31,8 @@ class FrameworkViewController: UIViewController {
     private func bind() {
         // input -> 사용자 입력을 받아서 처리
         // - 아이템 선택 되었을때 처리
-        selectedFramework
+        viewModel.selectedItem
+            .compactMap { $0 }
             .receive(on: RunLoop.main)
             .sink { [unowned self] framework in
                 let storyboard = UIStoryboard(name: "Detail", bundle: nil)
@@ -44,12 +44,14 @@ class FrameworkViewController: UIViewController {
         // output -> data, state에 따라서 UI 업데이트
         // - items가 세팅 되었을때 collectionView 업데이트
         
-        frameworkListPublisher
+        viewModel.frameworkListPublisher
             .receive(on: RunLoop.main)
             .sink { [unowned self] list in
                 self.configureCollectionView()
                 self.applyItemsToSection(list)
             }.store(in: &subscriptions)
+        
+        
     }
     
     private func applyItemsToSection(_ items: [Item], section: Section = .main) {
@@ -85,8 +87,6 @@ class FrameworkViewController: UIViewController {
 
 extension FrameworkViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let framework = frameworkListPublisher.value[indexPath.item]
-        print(">>> selected: \(framework.name)")
-        selectedFramework.send(framework)
+        viewModel.didSelect(at: indexPath)
     }
 }
