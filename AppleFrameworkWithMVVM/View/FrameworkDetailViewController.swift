@@ -9,9 +9,7 @@ import Combine
 import SafariServices
 
 class FrameworkDetailViewController: UIViewController {
-    
-    var buttonTapped = PassthroughSubject<AppleFramework, Never>()
-    var selectedApp = CurrentValueSubject<AppleFramework, Never>(AppleFramework(name: "", imageName: "", urlString: "", description: ""))
+    var viewModel: FrameworkDetailViewModel!
     var subscriptions = Set<AnyCancellable>()
     
     @IBOutlet weak var appImageView: UIImageView!
@@ -26,7 +24,7 @@ class FrameworkDetailViewController: UIViewController {
     
     private func bind() {
         // input -> 사용자 입력
-        buttonTapped
+        viewModel.buttonTapped
             .receive(on: RunLoop.main)
             .compactMap { URL(string: $0.urlString)}
             .sink { [unowned self] url in
@@ -35,7 +33,7 @@ class FrameworkDetailViewController: UIViewController {
             }.store(in: &subscriptions)
         
         // output -> 데이터 변경으로 인한 UI업데이트
-        selectedApp
+        viewModel.selectedApp
             .receive(on: RunLoop.main)
             .sink { [unowned self] selectedAppData in
                 self.updateUI(selectedAppData)
@@ -49,6 +47,6 @@ class FrameworkDetailViewController: UIViewController {
     }
     
     @IBAction func learnMoreButtonTapped(_ sender: UIButton) {
-        buttonTapped.send(selectedApp.value)
+        viewModel.learnMoreButtonTapped()
     }
 }
