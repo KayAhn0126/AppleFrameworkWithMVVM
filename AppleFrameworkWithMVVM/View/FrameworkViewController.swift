@@ -18,8 +18,8 @@ class FrameworkViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var subscriptions = Set<AnyCancellable>()
-    
     var viewModel: FrameworkViewModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = FrameworkViewModel(frameworkListPublisher: AppleFramework.list)
@@ -50,8 +50,6 @@ class FrameworkViewController: UIViewController {
                 self.configureCollectionView()
                 self.applyItemsToSection(list)
             }.store(in: &subscriptions)
-        
-        
     }
     
     private func applyItemsToSection(_ items: [Item], section: Section = .main) {
